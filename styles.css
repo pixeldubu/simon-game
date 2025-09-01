@@ -1,27 +1,29 @@
 body {
   text-align: center;
-  background-color: #011F3F;
+  background-color: #2c2c2c;
 }
 
-#level-title {
+#game-title {
   font-family: 'Press Start 2P', cursive;
   font-size: 3rem;
-  margin:  5%;
+  margin: 3%;
   color: #FEF2BF;
 }
 
-#high-score {
+#game-over, .score {
   font-family: 'Press Start 2P', cursive;
   font-size: 2rem;
-  margin:  5%;
   color: #FEF2BF;
+}
+
+#game-over {
+  display: none;
 }
 
 .container {
   display: block;
   width: 50%;
   margin: auto;
-
 }
 
 .btn {
@@ -31,6 +33,24 @@ body {
   width: 200px;
   border: 10px solid black;
   border-radius: 20%;
+}
+
+.start {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 2.5rem;
+  margin: 5%;
+  display: inline-block;
+  color: #FEF2BF;
+}
+
+.start:hover {
+  background: linear-gradient(90deg, #008000 10%,  #ff0000 33%, #ffff00 66%, #0000ff 90%);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  cursor: pointer;
 }
 
 .game-over {

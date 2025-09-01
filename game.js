@@ -4,7 +4,7 @@ var gamePattern = [];
 var userClickedPattern = [];
 
 var started = false;
-var level = 0;
+var currentScore = 0;
 let highScore;
 
 // Gets the highScore if one exists
@@ -22,15 +22,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-// EventListener for key press
-$(document).keypress(function() {
-    if (!started) {
-        $("#level-title").text("Level " + level);
-        nextSequence();
-        started = true;
-    }
-});
-
 // EventListener for button click
 $(".btn").click(function() {
     if (started) {
@@ -42,13 +33,26 @@ $(".btn").click(function() {
     }
 });
 
+// EventListener for start click
+$(".start").click(function() {
+    if (!started) {
+        $("#game-over").hide();
+        $("#your-score").show();
+        $("#high-score").show();
+        $(".start").hide();
+        nextSequence();
+        started = true;
+    }
+});
+
+// Gets the next step in the sequence
 function nextSequence() {
-    // Set userClickedPattern to empty for next level
+    // Set userClickedPattern to empty for next sequence
     userClickedPattern = [];
 
-    // Increase the level
-    level++;
-    $("#level-title").text("Level " + level);
+    // Increase the score
+    currentScore++;
+    $("#your-score").text("Score: " + currentScore);
 
     // Choose random colour
     var randomNumber = Math.floor(Math.random() * 4);
@@ -63,10 +67,11 @@ function nextSequence() {
 }
 
 // Checks user's answer against game answer
-function checkAnswer(currentLevel) {
-    if (userClickedPattern[currentLevel] == gamePattern[currentLevel]){
+function checkAnswer(currentSequence) {
+    if (userClickedPattern[currentSequence] == gamePattern[currentSequence]){
         // If answer is correct go to next sequence
         if (userClickedPattern.length == gamePattern.length) {
+            updateHighScore();
             setTimeout(function() {
                 nextSequence();
             }, 1000);
@@ -80,17 +85,18 @@ function checkAnswer(currentLevel) {
             $("body").removeClass("game-over");
         }, 200);
 
-        $("#level-title").text("Game Over, Press Any Key to Restart");
+        $("#game-over").show();
+        $("#your-score").hide();
+        $(".start").show();
         
-        updateHighScore();
         startOver();
     }
 }
 
 // Update the high score
 function updateHighScore() {
-    if (level > highScore) {
-        highScore = level;
+    if (currentScore > highScore) {
+        highScore = currentScore;
         localStorage.setItem("highScore", highScore);
     }
     document.getElementById("high-score").textContent = "High Score: " + highScore;
@@ -98,7 +104,7 @@ function updateHighScore() {
 
 // Start the game over
 function startOver() {
-    level = 0;
+    currentScore = 0;
     gamePattern = [];
     started = false;
 }
