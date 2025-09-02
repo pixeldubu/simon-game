@@ -50,10 +50,6 @@ function nextSequence() {
     // Set userClickedPattern to empty for next sequence
     userClickedPattern = [];
 
-    // Increase the score
-    currentScore++;
-    $("#your-score").text("Score: " + currentScore);
-
     // Choose random colour
     var randomNumber = Math.floor(Math.random() * 4);
     var randomChosenColour = buttonColours[randomNumber];
@@ -71,6 +67,9 @@ function checkAnswer(currentSequence) {
     if (userClickedPattern[currentSequence] == gamePattern[currentSequence]){
         // If answer is correct go to next sequence
         if (userClickedPattern.length == gamePattern.length) {
+            // Increase the score
+            currentScore++;
+            $("#your-score").text("Score: " + currentScore);
             updateHighScore();
             setTimeout(function() {
                 nextSequence();
